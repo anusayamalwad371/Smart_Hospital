@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Prediction History{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>Prediction History</h1><p>Saved educational ML prediction results.</p></div><a class="btn primary" href="{% url 'predict_disease' %}">+ New Prediction</a></div>
+<div class="card table-wrap"><table>
+<tr><th>Date</th><th>Patient</th><th>Symptoms</th><th>Prediction</th><th>Confidence</th></tr>
+{% for p in predictions %}<tr><td>{{ p.created_at|date:"d M Y H:i" }}</td><td>{% if p.patient %}{{ p.patient.name }}{% else %}Walk-in{% endif %}</td><td>{{ p.symptoms }}</td><td><strong>{{ p.predicted_disease }}</strong></td><td>{{ p.confidence }}%</td></tr>
+{% empty %}<tr><td colspan="5">No prediction history.</td></tr>{% endfor %}
+</table></div>
+{% endblock %}

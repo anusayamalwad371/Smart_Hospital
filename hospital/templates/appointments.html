@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Appointments{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>Appointments</h1><p>Schedule and track patient appointments.</p></div><a class="btn primary" href="{% url 'appointment_add' %}">+ New Appointment</a></div>
+<div class="card table-wrap"><table>
+<tr><th>Patient</th><th>Doctor</th><th>Date & Time</th><th>Reason</th><th>Status</th></tr>
+{% for a in appointments %}<tr><td>{{ a.patient.name }}</td><td>Dr. {{ a.doctor.name }}</td><td>{{ a.appointment_date|date:"d M Y, H:i" }}</td><td>{{ a.reason|default:"-" }}</td><td><span class="badge">{{ a.status }}</span></td></tr>
+{% empty %}<tr><td colspan="5">No appointments found.</td></tr>{% endfor %}
+</table></div>
+{% endblock %}

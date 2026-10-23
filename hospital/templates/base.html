@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Smart Hospital{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<nav class="navbar">
+  <div class="brand">🏥 Smart Hospital</div>
+  <div class="navlinks">
+    <a href="{% url 'dashboard' %}">Dashboard</a>
+    <a href="{% url 'patient_list' %}">Patients</a>
+    <a href="{% url 'doctor_list' %}">Doctors</a>
+    <a href="{% url 'appointment_list' %}">Appointments</a>
+    <a href="{% url 'predict_disease' %}">AI Prediction</a>
+    <a href="{% url 'prediction_history' %}">History</a>
+    <a href="/admin/">Admin</a>
+  </div>
+</nav>
+<main class="container">
+  {% for message in messages %}
+    <div class="alert {{ message.tags }}">{{ message }}</div>
+  {% endfor %}
+  {% block content %}{% endblock %}
+</main>
+<footer>Smart Hospital Management System • Educational Project</footer>
+</body>
+</html>

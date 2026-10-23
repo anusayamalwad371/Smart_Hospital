@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}AI Disease Prediction{% endblock %}
+{% block content %}
+<div class="page-head"><div><p class="eyebrow">MACHINE LEARNING</p><h1>Disease Prediction</h1><p>Select symptoms to get an educational model prediction.</p></div></div>
+<div class="warning">⚠️ <strong>Educational use only:</strong> This model does not provide a medical diagnosis. Consult a qualified healthcare professional for real symptoms.</div>
+<div class="grid2">
+<section class="card">
+<form method="post">
+{% csrf_token %}
+<label>Patient (optional)</label>
+<select name="patient"><option value="">Walk-in / not linked</option>{% for p in patients %}<option value="{{ p.id }}">{{ p.name }}</option>{% endfor %}</select>
+<h3>Select symptoms</h3>
+<div class="symptoms">
+{% for s in symptoms %}
+<label class="check"><input type="checkbox" name="symptoms" value="{{ s }}" {% if s in selected %}checked{% endif %}> {{ s|cut:"_"|title }}</label>
+{% endfor %}
+</div>
+<button class="btn primary full" type="submit">Predict Disease</button>
+</form>
+</section>
+<section class="card result-card">
+{% if result %}
+<p class="eyebrow">MODEL RESULT</p>
+<h2>{{ result }}</h2>
+<div class="confidence"><div style="width: {{ confidence }}%"></div></div>
+<p><strong>{{ confidence }}%</strong> model confidence</p>
+<p class="muted">Confidence is a model score, not a measure of clinical certainty.</p>
+{% else %}
+<div class="empty">Select symptoms and click <strong>Predict Disease</strong> to see the demo result.</div>
+{% endif %}
+</section>
+</div>
+{% endblock %}

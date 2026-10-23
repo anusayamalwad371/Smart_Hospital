@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="hero">
+  <div>
+    <p class="eyebrow">SMART HEALTHCARE PLATFORM</p>
+    <h1>Hospital Management Dashboard</h1>
+    <p>Manage patients, doctors, appointments and educational AI predictions from one place.</p>
+  </div>
+  <a class="btn primary" href="{% url 'predict_disease' %}">Run AI Prediction →</a>
+</div>
+
+<div class="cards">
+  <div class="card stat"><span>Patients</span><strong>{{ patient_count }}</strong></div>
+  <div class="card stat"><span>Doctors</span><strong>{{ doctor_count }}</strong></div>
+  <div class="card stat"><span>Appointments</span><strong>{{ appointment_count }}</strong></div>
+  <div class="card stat"><span>Predictions</span><strong>{{ prediction_count }}</strong></div>
+</div>
+
+<div class="grid2">
+  <section class="card">
+    <div class="section-head"><h2>Upcoming Appointments</h2><a href="{% url 'appointment_add' %}">+ Add</a></div>
+    <div class="table-wrap"><table>
+      <tr><th>Patient</th><th>Doctor</th><th>Date</th><th>Status</th></tr>
+      {% for a in upcoming %}
+      <tr><td>{{ a.patient.name }}</td><td>Dr. {{ a.doctor.name }}</td><td>{{ a.appointment_date|date:"d M Y H:i" }}</td><td><span class="badge">{{ a.status }}</span></td></tr>
+      {% empty %}<tr><td colspan="4">No appointments yet.</td></tr>{% endfor %}
+    </table></div>
+  </section>
+  <section class="card">
+    <div class="section-head"><h2>Recent Predictions</h2><a href="{% url 'prediction_history' %}">View all</a></div>
+    <div class="table-wrap"><table>
+      <tr><th>Patient</th><th>Prediction</th><th>Confidence</th></tr>
+      {% for p in recent_predictions %}
+      <tr><td>{% if p.patient %}{{ p.patient.name }}{% else %}Walk-in{% endif %}</td><td>{{ p.predicted_disease }}</td><td>{{ p.confidence }}%</td></tr>
+      {% empty %}<tr><td colspan="3">No predictions yet.</td></tr>{% endfor %}
+    </table></div>
+  </section>
+</div>
+{% endblock %}

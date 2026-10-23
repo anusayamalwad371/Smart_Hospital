@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Doctors{% endblock %}
+{% block content %}
+<div class="page-head"><div><h1>Doctors</h1><p>Hospital doctor directory.</p></div><a class="btn primary" href="{% url 'doctor_add' %}">+ Add Doctor</a></div>
+<div class="cards">
+{% for d in doctors %}
+<div class="card doctor"><div class="avatar">Dr</div><div><h3>{{ d.name }}</h3><p>{{ d.specialization }}</p><small>Room {{ d.room_no|default:"-" }} • {{ d.phone }}</small></div></div>
+{% empty %}<div class="card">No doctors added yet.</div>{% endfor %}
+</div>
+{% endblock %}
